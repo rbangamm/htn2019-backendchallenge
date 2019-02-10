@@ -1,5 +1,6 @@
-import sqlite3
 import requests
+import sqlite3
+import config
 from sqlite3 import Error
 
 def setup(conn):
@@ -51,6 +52,7 @@ def populate(url, conn):
 
 def create_connection(db_file):
     """Create a connection to a SQLite DB"""
+    conn = None
     try:
         conn = sqlite3.connect(db_file)
         conn.execute("PRAGMA foreign_keys=1")
@@ -63,4 +65,4 @@ def create_connection(db_file):
     finally:
         conn.close()
 
-create_connection("htn.db")
+create_connection(config.DATABASE)

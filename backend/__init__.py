@@ -1,7 +1,15 @@
 import sqlite3
-from flask import Flask, g, jsonify
+import config
+from flask import Flask, g
+from backend.api.users import users
 
-DB = 'htn.db'
+app = Flask(__name__)
+
+app.register_blueprint(users)
+
+
+## DB HELPER FUNCTIONS
+DB = config.DATABASE
 
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
@@ -20,28 +28,8 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
-app = Flask(__name__)
-
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
-
-@app.route('/api/v1.0/')
-def index():
-    return "Welcome to the API!"
-
-@app.route('/api/v1.0/users/')
-def get_users():
-    c = get_db().cursor
-    users = query_db('select * from users')
-    return jsonify(users)
-
-@app.route('/api/v1.0/users/<int:user_id>')
-def get_user(user_id):
-   c = get_db().cursor()
-   user = query_db('select * from users where id = ?', [user_id], one=True)
-   return jsonify(user)
-
-
