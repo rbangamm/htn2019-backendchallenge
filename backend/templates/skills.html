@@ -1,0 +1,14 @@
+<table>
+	<tr>
+	   <th align="left" class="skill_head">Skills</th>
+	   <th align="left" class="count_head">Count</th>
+	   <th align="left" class="rating_head">Average Rating</th>
+	</tr>
+{% for item in items %}
+	<tr>
+	   <td class="skills">{{item["name"]}}</td>
+	   <td class="counts">{{item["count"]}}</td>
+	   <td class="ratings">{{item["rating"]}}</td>
+	</tr>
+{% endfor %}
+</table>
