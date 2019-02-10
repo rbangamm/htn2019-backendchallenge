@@ -6,8 +6,8 @@ from sqlite3 import Error
 
 
 def check_dir(path_name):
-    if not os.path.exists('.' + path_name):
-        dir_name = os.path.dirname(path_name)
+    dir_name = os.path.dirname(path_name)
+    if not os.path.exists(dir_name):
         os.mkdir(dir_name)
 
 def setup(conn):
