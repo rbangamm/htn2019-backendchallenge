@@ -2,10 +2,12 @@ import sqlite3
 import config
 from flask import Flask, g
 from backend.api.users import users
+from backend.api.skills import skills
 
 app = Flask(__name__)
 
 app.register_blueprint(users, url_prefix='%s/users' % config.ROOT)
+app.register_blueprint(skills, url_prefix='%s/skills' % config.ROOT)
 
 
 ## DB HELPER FUNCTIONS

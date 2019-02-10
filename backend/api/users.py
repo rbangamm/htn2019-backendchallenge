@@ -6,7 +6,6 @@ users = Blueprint('users', __name__)
 
 @users.route('/', methods=['GET'])
 def get_users():
-    c = backend.get_db().cursor()
     users = backend.query_db('select * from users')
     for ind, user in enumerate(users):
         user_skills = backend.query_db('select * from skills where user_id = ?', [user['id']])
@@ -16,7 +15,6 @@ def get_users():
 
 @users.route('/<int:user_id>', methods=['GET'])
 def get_user(user_id):
-   c = backend.get_db().cursor()
    user = backend.query_db(
            'select * from users where id = ?', [user_id], one=True)
    user_skills = backend.query_db('select * from skills where user_id = ?', [user_id])
