@@ -1,7 +1,14 @@
 import requests
 import sqlite3
+import os
 import config
 from sqlite3 import Error
+
+
+def check_dir(path_name):
+    if not os.path.exists('.' + path_name):
+        dir_name = os.path.dirname(path_name)
+        os.mkdir(dir_name)
 
 def setup(conn):
     c = conn.cursor()
@@ -52,6 +59,7 @@ def populate(url, conn):
 
 def create_connection(db_file):
     """Create a connection to a SQLite DB"""
+    check_dir(db_file)
     conn = None
     try:
         conn = sqlite3.connect(db_file)

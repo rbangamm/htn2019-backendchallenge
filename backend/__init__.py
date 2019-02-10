@@ -5,7 +5,7 @@ from backend.api.users import users
 
 app = Flask(__name__)
 
-app.register_blueprint(users)
+app.register_blueprint(users, url_prefix='%s/users' % config.ROOT)
 
 
 ## DB HELPER FUNCTIONS
