@@ -1,5 +1,4 @@
 import backend
-from prettytable import PrettyTable
 from flask import Blueprint, jsonify, request, render_template
 
 skills = Blueprint('skills', __name__)
@@ -9,12 +8,20 @@ def get_skills():
     
     min_rating = request.args.get('min_rating')
     min_freq = request.args.get('min_frequency')
+    sort = request.args.get('sort')
+    order = request.args.get('order')
 
     if min_rating is None:
         min_rating = 0
 
     if min_freq is None:
         min_freq = 0
+
+    if sort is None:
+        sort = ""
+
+    if order is None:
+        order = "asc"
 
     min_rating = int(min_rating)
     min_freq = int(min_freq)
@@ -46,5 +53,10 @@ def get_skills():
         skill_rating[name] = round(skill_rating[name], 1)
         items.append({'name' : name, 'count' : skill_count[name], 
                   'rating' : skill_rating[name]})
+
+    if sort in ['name', 'count', 'rating']:
+        items = sorted(items, key=lambda x: x[sort])
+        if order == "desc":
+            items = reversed(items)
 
     return render_template('skills.html', items=items)
