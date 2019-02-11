@@ -44,6 +44,22 @@ PUT: Updates data fields corresponding to the keys in the sent JSON. Returns upd
 ### Skills
 
 Supports GET requests. Returns an HTML table of skill names (Skills) with the number of users with each skill (Count) and average skill rating for each skill (Average Rating). 
-Query parameter filtering for min_rating and min_frequency is also supported. E.g:
+Query parameter filtering for min_rating, min_frequency, and sorting is also supported. 
 
-http://http://localhost:5000/api/v1.0/skills/?min_rating=5&min_frequency=60 will only create the table for the skills that have a rating >= 5 and a user count of >= 60.
+E.g:
+http://http://localhost:5000/api/v1.0/skills/?min_rating=5&min_frequency=60&sort=count&order=desc will only create the table for the skills that have a rating >= 5 and a user count of >= 60. The table will be sorted by the 'Count' column in a descending order.
+
+#### More details on query params
+
++ *min_rating* -> integer
++ *min_frequency* -> integer
++ *sort* -> x in ["name", "count", "rating"]
++ *order* -> x in ["asc", "desc"]
+
+**min_rating** : The minimum rating for the skill to be considered in the table creation. I.e. if *min_rating* is 5, only the skills with a rating >= 5 will be considered during the counting as well as for the average rating calculation.
+
+**min_frequency** : The minimum frequency for a skill to appear in the table. I.e. if the count value for the skill is less than *min_frequency*, the skill will not appear on the table.
+
+**sort** : Specifies which column the table is being sorted by. Default is unsorted.
+
+**order** : Describes the order in which the values are displayed. Defaults to ascending order("asc").
