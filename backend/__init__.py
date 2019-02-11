@@ -15,6 +15,7 @@ def index():
 
 ## DB HELPER FUNCTIONS
 DB = config.DATABASE
+SCHEMAS = {}
 
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
@@ -32,6 +33,13 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
+
+def get_schema(table_name):
+    if SCHEMAS.get(table_name) is None:
+        cur = get_db().execute('select * from %s' % table_name)
+        return [member[0] for member in cur.description]
+    return SCHEMAS.get(table_name)
+        
 
 @app.teardown_appcontext
 def close_connection(exception):

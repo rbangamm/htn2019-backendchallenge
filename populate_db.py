@@ -9,6 +9,8 @@ def check_dir(path_name):
     dir_name = os.path.dirname(path_name)
     if not os.path.exists(dir_name):
         os.mkdir(dir_name)
+        return True
+    return False
 
 def setup(conn):
     c = conn.cursor()
@@ -59,7 +61,8 @@ def populate(url, conn):
 
 def create_connection(db_file):
     """Create a connection to a SQLite DB"""
-    check_dir(db_file)
+    if not check_dir(db_file):
+        return
     conn = None
     try:
         conn = sqlite3.connect(db_file)

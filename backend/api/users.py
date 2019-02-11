@@ -25,8 +25,12 @@ def get_user(user_id):
 def update_user(user_id):
     c = backend.get_db().cursor()
     data = request.json
+    schema = backend.get_schema('users')
     for key, value in data.items():
         if key != 'skills':
+            # Don't do anything if the key isn't valid
+            if key not in schema:
+                continue
             c.execute('UPDATE users SET ' + key + ' = ? WHERE id = ?', [value, user_id])
         else:
             for skill in data[key]:
@@ -34,7 +38,7 @@ def update_user(user_id):
                     'SELECT * FROM skills WHERE user_id=? AND name=?', 
                     [user_id, skill['name']])
                 if len(skill_ratings) == 0:
-                    # If the skill doesn't exists, insert into the skills table
+                    # If the skill doesn't exist, insert into the skills table
                     c.execute(
                         '''INSERT INTO skills (name, rating, user_id) 
                         VALUES (?, ?, ?)''', 

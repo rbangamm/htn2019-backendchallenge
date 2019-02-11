@@ -3,7 +3,6 @@ import backend
 FIELDS = []
 
 def format_user(user_skills, user):
-    print(len(user_skills))
     user_skills = [{"name":skill['name'], "rating":skill["rating"]} for skill in user_skills]
     user['skills'] = user_skills
 
