@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.register_blueprint(users, url_prefix='%s/users' % config.ROOT)
 app.register_blueprint(skills, url_prefix='%s/skills' % config.ROOT)
 
-@app.route('/%s' % config.ROOT)
+@app.route('%s/' % config.ROOT)
 def index():
     return "Welcome to this API!"
 
