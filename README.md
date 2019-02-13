@@ -13,7 +13,7 @@
 ### Users
 
 **All users**: http://localhost:5000/api/v1.0/users
-Supports GET requests. Returns a list of users in the form:
+Supports GET and POST requests. GET returns a list of all users in the form:
 
 ```json
 {
@@ -32,6 +32,8 @@ Supports GET requests. Returns a list of users in the form:
   ]
 }
 ```
+
+To create a new user, send a POST request to this endpoint matching the JSON format described above. Any additional fields will be ignored. If any keys are missing, the server will return a 400 error.
 
 **One user**: http://localhost:5000/api/v1.0/users/<int:user_id>
 
